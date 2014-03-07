@@ -6,9 +6,9 @@ when execution results in an error.
 By default, the Ruby 'system' method will return (on Mac OS X):
 
 ```ruby
-system('ls')        => true, exit code: 0
-system('ls | grep') => false, exit code: 2
-system('foo')       => nil, exit code: 127
+system('ls')        => true #exit code: 0
+system('ls | grep') => false #exit code: 2
+system('foo')       => nil #exit code: 127
 ```
 
 In UNIX, when commands are executed at the shell, the above exit codes mean:
