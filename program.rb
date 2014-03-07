@@ -1,7 +1,7 @@
-def system_call(cmd)
-  result = system(cmd)
-  raise SystemExit, "Command '#{cmd}' not found." if result.eql? nil
-  raise ScriptError, "Error in command '#{cmd}'." if result.eql? false
+def system_call(*args)
+  result = system(*args)
+  raise SystemExit, "Command '#{args}' not found." if result.eql? nil
+  raise ScriptError, "Error in command '#{args}'." if result.eql? false
   result
 end
 
