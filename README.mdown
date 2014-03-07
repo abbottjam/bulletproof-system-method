@@ -25,6 +25,7 @@ methods. This causes problems, in particular when Ruby silently swallows a non-e
 command by returning nil (a non-error return value):
 
 [Null References the Billion Dollar Mistake][2]
+
 [If You Gaze Into Nil, Nil Gazes Also Into You][3]
 
 The [Ruby exception hierarchy][4] has exceptions that much better map to the UNIX error codes -
