@@ -1,0 +1,72 @@
+# Bulletproof 'system' method
+
+An alternative 'system' method for Ruby, that raises programmer-friendly exceptions
+when execution results in an error.
+
+By default, the Ruby 'system' method will return (on Mac OS X):
+
+```ruby
+require 'redcarpet'
+system('ls')
+```
+=> true, exit code: 0
+
+```ruby
+require 'redcarpet'
+system('ls | grep')
+```
+=> false, exit code: 2
+
+```ruby
+require 'redcarpet'
+system('foo')
+```
+=> nil, exit code: 127
+
+In UNIX, when commands are executed at the shell, the above exit codes mean:
+
+- 0:   Success on executing a command
+- 2:   Inappropriate use of a recognized command
+- 127: Command not found
+
+http://tldp.org/LDP/abs/html/exitcodes.html
+
+Clicking this number[^fn-sample_footnote] will lead you to a footnote.
+
+However because true, false, and nil are return values of Ruby methods, they are
+the ones returned from executing shell scripts from Ruby and propagated to caller
+methods. This causes problems, in particular when Ruby silently swallows a non-existing
+command by returning nil (a non-error return value).
+
+http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare
+http://robots.thoughtbot.com/if-you-gaze-into-nil-nil-gazes-also-into-you
+
+The Ruby exception hierarchy has exceptions that much better map to the UNIX
+error codes - hence this workoaround / wrapper function.
+http://rubylearning.com/satishtalim/ruby_exceptions.html
+
+
+[^fn-sample_footnote]: Handy! Now click the return link to go back.
+
+
+## License (MIT)
+
+Copyright (c) [2014] [James Abbott]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
