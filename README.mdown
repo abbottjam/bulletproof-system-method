@@ -6,22 +6,10 @@ when execution results in an error.
 By default, the Ruby 'system' method will return (on Mac OS X):
 
 ```ruby
-require 'redcarpet'
-system('ls')
+system('ls')        => true, exit code: 0
+system('ls | grep') => false, exit code: 2
+system('foo')       => nil, exit code: 127
 ```
-=> true, exit code: 0
-
-```ruby
-require 'redcarpet'
-system('ls | grep')
-```
-=> false, exit code: 2
-
-```ruby
-require 'redcarpet'
-system('foo')
-```
-=> nil, exit code: 127
 
 In UNIX, when commands are executed at the shell, the above exit codes mean:
 
@@ -29,24 +17,23 @@ In UNIX, when commands are executed at the shell, the above exit codes mean:
 - 2:   Inappropriate use of a recognized command
 - 127: Command not found
 
-http://tldp.org/LDP/abs/html/exitcodes.html
-
-Clicking this number[^fn-sample_footnote] will lead you to a footnote.
+More [on exit codes here][1].
 
 However because true, false, and nil are return values of Ruby methods, they are
 the ones returned from executing shell scripts from Ruby and propagated to caller
 methods. This causes problems, in particular when Ruby silently swallows a non-existing
-command by returning nil (a non-error return value).
+command by returning nil (a non-error return value):
 
-http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare
-http://robots.thoughtbot.com/if-you-gaze-into-nil-nil-gazes-also-into-you
+[Null References the Billion Dollar Mistake][2]
+[If You Gaze Into Nil, Nil Gazes Also Into You][3]
 
-The Ruby exception hierarchy has exceptions that much better map to the UNIX
-error codes - hence this workoaround / wrapper function.
-http://rubylearning.com/satishtalim/ruby_exceptions.html
+The [Ruby exception hierarchy][4] has exceptions that much better map to the UNIX error codes -
+hence this workaround / wrapper function.
 
-
-[^fn-sample_footnote]: Handy! Now click the return link to go back.
+[1]: http://tldp.org/LDP/abs/html/exitcodes.html "Unix Exit Codes"
+[2]: http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare "Null References"
+[3]: http://robots.thoughtbot.com/if-you-gaze-into-nil-nil-gazes-also-into-you "Nil Gazing"
+[4]: http://rubylearning.com/satishtalim/ruby_exceptions.html "Ruby Exceptions"
 
 
 ## License (MIT)
